@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ton</title>
+</head>
+<body>
+<section id="ton">
+    <div>
+        <div id="connect"></div>
+        <div id="content">
+            telegram
+        </div>
+    </div>
+</section>
+</body>
+<script type="module">
+    import webSocket from '/webSocket.mjs'
+    webSocket({name:'telegram-login'}).then((Class)=>{
+        let socket = new Class['class']("ws://localhost:7000")
+        let sseSource = new EventSource('http://localhost:7000/connect');
+        sseSource.addEventListener('ping', (e) => {
+            const messageData = JSON.parse(e.data);
+            if(messageData['version']){
+                document['body'].querySelector('#connect').insertAdjacentHTML('beforeend',`
+                    <div class="item">
+                         <div class="version">${messageData['version']}</div>
+                         <div class="date">${messageData['date']}</div>
+                     </div>`)
+            }
+        });
+        sseSource.onopen = async (e) =>{
+            console.log("Событие: open sse", socket['socket']['readyState']);
+            switch (socket['socket']['readyState']) {
+                case 0:
+                    break
+                case 1:
+                    break
+                case 2:
+                    socket['socket'].close()
+                    socket = new Class['class']("ws://localhost:7000")
+                    break
+                case 3:
+                    socket['socket'].close()
+                    socket = new Class['class']("ws://localhost:7000")
+                    break
+                default:
+                    break
+            }
+        };
+        sseSource.onerror = function(e) {
+            console.log("Событие: error", sseSource.CONNECTING);
+            console.log("Событие: error~~~~~~~~~~~~~", this);
+
+            switch (this.readyState) {
+                case 0:
+                    console.log(`Переподключение (readyState=${this.readyState})...`);
+                    break
+                case 1:
+                    console.log(`соединение открыто`);
+                    break
+                case 2:
+                    // sseSource = new EventSource('http://localhost:7777/connect');
+                    break
+                default:
+                    console.warn('неизвестное состояние')
+                    break
+            }
+            if (this.readyState === sseSource.CONNECTING) {
+
+            } else {
+                console.log("Произошла ошибка.");
+            }
+        };
+
+        document.addEventListener('openConnect',async (e)=>{
+            socket['socket'].send(JSON.stringify({ket:'value'}))
+        })
+    })
+</script>
+</html>
