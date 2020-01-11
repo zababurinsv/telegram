@@ -17,7 +17,7 @@
 <script type="module">
     import webSocket from '/webSocket.mjs'
     webSocket({name:'telegram-login'}).then((Class)=>{
-        let socket = new Class['class']("ws://telegram-rington.herokuapp.com")
+        let socket = new Class['class']("wss://telegram-rington.herokuapp.com")
             // http://localhost:7000/connect
         let sseSource = new EventSource('https://telegram-rington.herokuapp.com/connect');
         sseSource.addEventListener('ping', (e) => {
@@ -39,11 +39,11 @@
                     break
                 case 2:
                     socket['socket'].close()
-                    socket = new Class['class']("ws://localhost:7000")
+                    socket = new Class['class']("wss://telegram-rington.herokuapp.com")
                     break
                 case 3:
                     socket['socket'].close()
-                    socket = new Class['class']("ws://localhost:7000")
+                    socket = new Class['class']("wss://telegram-rington.herokuapp.com")
                     break
                 default:
                     break
