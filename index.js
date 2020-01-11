@@ -253,7 +253,5 @@ app.get('/*', async (req, res) => {
 
 app.use(queue.getErrorMiddleware())
 
-server.listen(7000, () =>  {
-    server.keepAliveTimeout = 0;
-    console.info(`Server running on port: 7000`)
+server.listen(process.env.PORT || 7000, () =>  { console.info(`Server running on port: 7000`)
 });
