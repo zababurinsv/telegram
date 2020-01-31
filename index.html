@@ -15,6 +15,7 @@
 </section>
 </body>
 <script type="module">
+
     import webSocket from '/webSocket.mjs'
     webSocket({name:'telegram-login'}).then((Class)=>{
         let socket = new Class['class'](`ws://${location.host}`)
