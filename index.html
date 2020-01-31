@@ -17,33 +17,32 @@
 <script type="module">
     import webSocket from '/webSocket.mjs'
     webSocket({name:'telegram-login'}).then((Class)=>{
-        let socket = new Class['class']("wss://telegram-rington.herokuapp.com")
-            // http://localhost:7000/connect
-        let sseSource = new EventSource('https://telegram-rington.herokuapp.com/connect');
+        let socket = new Class['class'](`ws://${location.host}`)
+        let sseSource = new EventSource(`${location.origin}/connect`);
         sseSource.addEventListener('ping', (e) => {
             const messageData = JSON.parse(e.data);
             if(messageData['version']){
                 document['body'].querySelector('#connect').insertAdjacentHTML('beforeend',`
-                    <div class="item">
-                         <div class="version">${messageData['version']}</div>
-                         <div class="date">${messageData['date']}</div>
-                     </div>`)
-            }
-        });
-        sseSource.onopen = async (e) =>{
-            console.log("Событие: open sse", socket['socket']['readyState']);
-            switch (socket['socket']['readyState']) {
-                case 0:
+                     <div class="item">
+                          <div class="version">${messageData['version']}</div>
+                          <div class="date">${messageData['date']}</div>
+                      </div>`)
+             }
+         });
+         sseSource.onopen = async (e) =>{
+             console.log("Событие: open sse", socket['socket']['readyState']);
+             switch (socket['socket']['readyState']) {
+                 case 0:
                     break
                 case 1:
                     break
                 case 2:
                     socket['socket'].close()
-                    socket = new Class['class']("wss://telegram-rington.herokuapp.com")
+                    socket = new Class['class'](`ws://${location.host}`)
                     break
                 case 3:
                     socket['socket'].close()
-                    socket = new Class['class']("wss://telegram-rington.herokuapp.com")
+                    socket = new Class['class'](`ws://${location.host}`)
                     break
                 default:
                     break
@@ -61,7 +60,6 @@
                     console.log(`соединение открыто`);
                     break
                 case 2:
-                    // sseSource = new EventSource('http://localhost:7777/connect');
                     break
                 default:
                     console.warn('неизвестное состояние')
