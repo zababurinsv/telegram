@@ -27,12 +27,12 @@
                           <div class="version">${messageData['version']}</div>
                           <div class="date">${messageData['date']}</div>
                       </div>`)
-             }
-         });
-         sseSource.onopen = async (e) =>{
-             console.log("Событие: open sse", socket['socket']['readyState']);
-             switch (socket['socket']['readyState']) {
-                 case 0:
+            }
+        });
+        sseSource.onopen = async (e) =>{
+            console.log("Событие: open sse", socket['socket']['readyState']);
+            switch (socket['socket']['readyState']) {
+                case 0:
                     break
                 case 1:
                     break
