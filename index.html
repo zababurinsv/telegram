@@ -18,7 +18,7 @@
 
     import webSocket from '/webSocket.mjs'
     webSocket({name:'telegram-login'}).then((Class)=>{
-        let socket = new Class['class'](`ws://${location.host}`)
+        let socket = new Class['class'](`wss://${location.host}`)
         let sseSource = new EventSource(`${location.origin}/connect`);
         sseSource.addEventListener('ping', (e) => {
             const messageData = JSON.parse(e.data);
@@ -39,11 +39,11 @@
                     break
                 case 2:
                     socket['socket'].close()
-                    socket = new Class['class'](`ws://${location.host}`)
+                    socket = new Class['class'](`wss://${location.host}`)
                     break
                 case 3:
                     socket['socket'].close()
-                    socket = new Class['class'](`ws://${location.host}`)
+                    socket = new Class['class'](`wss://${location.host}`)
                     break
                 default:
                     break
